@@ -1,8 +1,23 @@
-FROM cthos/docker-laravel-71:latest
+FROM ubuntu:focal
 
-RUN apt-get update
-RUN apt-get -y install php7.2 php7.2-common php7.2-mbstring php7.2-xml php7.2-curl php7.2-fpm php7.2-mysql
-RUN apt-get -y remove php7.1 php7.1-common php7.1-mbstring php7.1-xml php7.1-curl php7.1-fpm php7.1-mysql
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+RUN apt install -y nginx mysql-server mysql-client php7.4 php7.4-common php7.4-mbstring php7.4-xml php7.4-gd php7.4-curl php7.4-fpm php7.4-mysql supervisor curl git nodejs npm
+
+RUN npm install -g npm
+RUN npm install -g n
+
+RUN n lts
 
 COPY config/default-site /etc/nginx/sites-available/default
 COPY config/php-fpm.conf /etc/supervisord/php-fpm.conf
+COPY config/supervisor.conf /etc/supervisor.conf
+COPY config/install-composer.sh /install-composer.sh
+
+RUN /bin/bash /install-composer.sh && rm -rf /install-composer.sh
+
+COPY config/start.sh /start.sh
+RUN chmod +x /start.sh
+
+CMD ["supervisord", "-c", "/etc/supervisor.conf"]

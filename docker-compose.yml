@@ -1,0 +1,11 @@
+version: "3"
+
+services: 
+  everything:
+    image: cthos/docker-laravel-74:latest
+    volumes:
+      - ./:/share
+    ports:
+      - 3306:3306
+      - 80:80
+      - 443:443
