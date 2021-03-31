@@ -3,7 +3,7 @@ FROM ubuntu:focal
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
-RUN apt install -y nginx mysql-server mysql-client php7.4 php7.4-common php7.4-mbstring php7.4-xml php7.4-gd php7.4-curl php7.4-fpm php7.4-mysql supervisor curl git nodejs npm
+RUN apt install -y nginx mysql-server mysql-client php7.4 php7.4-common php7.4-mbstring php7.4-xml php7.4-gd php7.4-curl php7.4-fpm php7.4-zip php7.4-mysql supervisor curl git nodejs npm
 
 RUN npm install -g npm
 RUN npm install -g n
