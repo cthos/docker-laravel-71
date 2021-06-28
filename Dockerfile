@@ -17,6 +17,9 @@ COPY config/install-composer.sh /install-composer.sh
 
 RUN /bin/bash /install-composer.sh && rm -rf /install-composer.sh
 
+## Allow mysql to bind on 0.0.0.0
+RUN sed -ie s/127.0.0.1/0.0.0.0/g /etc/mysql/mysql.conf.d/mysqld.cnf
+
 COPY config/start.sh /start.sh
 RUN chmod +x /start.sh
 
